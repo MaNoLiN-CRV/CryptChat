@@ -1,5 +1,4 @@
 import WebSocketConfig from "../config/webSocketConfig";
-import Message from "../database/entities/message";
 import MessageOperations from "../database/messageCRUD";
 import { getFromCache } from "../messages/cache";
 import { messageHandler } from "../messages/messageHandler";
@@ -33,7 +32,7 @@ const getInitialMessages = async () : Promise<string[]> => {
     const messages: string[] = [];
     const databaseMessages = await MessageOperations.getLastNMessages(WebSocketConfig.initialMessagesLoading);
     messages.push(...databaseMessages?.map(message => message.encryptedMessage));
-    messages.push(...getFromCache());
+    messages.push(...getFromCache().map(message => message.encryptedMessage));
     if(!messages) return [];
     return messages;
 }

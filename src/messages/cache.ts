@@ -1,11 +1,13 @@
 import WebSocketConfig from "../config/webSocketConfig";
+import Message from "../database/entities/message";
+import MessageOperations from "../database/messageCRUD";
 
-const cache = new Array<string>(); // This cache is to avoid overloading the database
+const cache = new Array<Message>(); // This cache is to avoid overloading the database
 
-export const addToCache = (message: string) => {
+export const addToCache = (message: Message) => {
     cache.push(message);
     if(cache.length >= WebSocketConfig.maxMessageCache) {
-        // Save the messages to the database and clear the cache
+        MessageOperations.saveMessages(cache);
         cache.length = 0; // Clear the cache
     }
 }

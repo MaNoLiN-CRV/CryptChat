@@ -54,6 +54,14 @@ export default class MessageOperations {
     static async deleteAllMessages(): Promise<void> {
         await this.collection.deleteMany({});
     }
+    
+    /**
+     * Saves an array of messages to the database.
+     * @param messages The array of messages to save.
+     */
+    static async saveMessages(messages: Message[]): Promise<void> {
+        await this.collection.insertMany(messages);
+    }
 }
 
 
