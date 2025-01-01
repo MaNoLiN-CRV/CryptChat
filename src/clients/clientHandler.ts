@@ -1,6 +1,6 @@
 import { getFromCache } from "../messages/cache";
 import { messageHandler } from "../messages/messageHandler";
-import { webSocketServer } from "../server";
+import { webSocketServer } from "../server/server";
 import { WebSocket } from "ws";
 
 let currentConnections = 0;

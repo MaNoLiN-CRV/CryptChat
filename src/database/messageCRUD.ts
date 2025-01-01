@@ -5,7 +5,7 @@ import client from './database';
 const dbName = 'messages';
 const collectionName = 'messages';
 
-class MessageOperations {
+export default class MessageOperations {
     private  db: Db;
     private collection: Collection<Message>;
 
