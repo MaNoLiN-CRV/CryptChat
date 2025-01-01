@@ -13,7 +13,6 @@ export const messageHandler = (ws: WebSocket) => {
 
     ws.on('shutdownServer', () => {
         sendServerMessage('Server shutting down...');
-        
         shutdownServer(); // Emergency shutdown (all the messages will be lost)
     })
 
