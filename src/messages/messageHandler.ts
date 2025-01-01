@@ -16,10 +16,6 @@ export const messageHandler = (ws: WebSocket) => {
         
     })
 
-    ws.on('initialMessages', () => {
-        ws.emit('initialMessages', MessageOperationsInstace.getLastNMessages(WebSocketConfig.initialMessagesLoading)); // Send the initial messages to the client
-    })
-
     ws.on('shutdownServer', () => {
         sendServerMessage('Server shutting down...');
         shutdownServer(); // Emergency shutdown (all the messages will be lost)

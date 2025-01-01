@@ -1,3 +1,6 @@
+import WebSocketConfig from "../config/webSocketConfig";
+import Message from "../database/entities/message";
+import MessageOperations from "../database/messageCRUD";
 import { getFromCache } from "../messages/cache";
 import { messageHandler } from "../messages/messageHandler";
 import { webSocketServer } from "../server/server";
@@ -26,9 +29,11 @@ const validateConnection = (ws: WebSocket): boolean => {
 /**
  * @returns The initial messages to send to the client
  */
-const getInitialMessages = () => {
-    let messages = new Array<string>();
-    // TODO : Get initial messages from the database
-    messages.concat(getFromCache());
+const getInitialMessages = async () : Promise<string[]> => {
+    const messages: string[] = [];
+    const databaseMessages = await MessageOperations.getLastNMessages(WebSocketConfig.initialMessagesLoading);
+    messages.push(...databaseMessages?.map(message => message.encryptedMessage));
+    messages.push(...getFromCache());
+    if(!messages) return [];
     return messages;
 }
