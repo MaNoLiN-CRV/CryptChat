@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native/Libraries/StyleSheet/StyleSheet";
 
-const customButtonStyle = StyleSheet.create({
+export const customButtonStyle = StyleSheet.create({
     container: {
       borderRadius: 10,
       backgroundColor: 'transparent',
@@ -15,4 +15,16 @@ const customButtonStyle = StyleSheet.create({
     },
   });
 
-export { customButtonStyle }
+
+export const customTextFieldStyle = StyleSheet.create({
+    container: {
+        borderRadius: 10,
+        backgroundColor: 'rgba(255, 255, 255, 0.1)',
+        padding: 10,
+        marginVertical: 10,
+    },
+    input: {
+        fontSize: 16,
+        color: '#fff',
+    },
+});
