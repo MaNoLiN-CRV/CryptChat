@@ -17,8 +17,7 @@ interface MessageData  {
 
 
 export const messageHandler = (ws: WebSocket) => {
-    ws.on('message', (messageData: MessageData) => {
-        const { username, message, timestamp } = messageData;
+    ws.on('message', ({ username, message, timestamp }: MessageData) => {
         const encryptedMessage = encrypt(message);
         const cacheMessage: Message = { username, encryptedMessage, timestamp };
         addToCache(cacheMessage); // Add the message to the cache
