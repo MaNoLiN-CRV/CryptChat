@@ -1,6 +1,5 @@
 import { WebSocket } from "ws";
 import { webSocketServer } from "../server/server";
-import { encrypt } from "../encryption/encryption";
 import { addToCache } from "./cache";
 import { shutdownServer } from "../server/commandsExecutor";
 import  MessageOperations  from "../database/messageCRUD";
@@ -18,10 +17,8 @@ interface MessageData  {
 
 export const messageHandler = (ws: WebSocket) => {
     ws.on('message', ({ username, message, timestamp }: MessageData) => {
-        const encryptedMessage = encrypt(message);
-        const cacheMessage: Message = { username, encryptedMessage, timestamp };
-        addToCache(cacheMessage); // Add the message to the cache
-        webSocketServer.emit('message', { username, message, timestamp }); // Broadcast to all clients
+        
+
     });
 
     ws.on('shutdownServer', () => {

@@ -1,20 +1,13 @@
-import { createCipheriv, createDecipheriv } from 'crypto';
-import { generateKey ,  generateIv } from './keyGenerator';
-const key = generateKey();
-const iv = generateIv();
-const cipher = createCipheriv('aes-256-cbc', key, iv);
-const decipher = createDecipheriv('aes-256-cbc', key, iv);
+import * as forge from 'node-forge';
 
-
-
-export const encrypt = (text: string) : string => {
-    let encrypted = cipher.update(text, 'utf8', 'hex');
-    encrypted += cipher.final('hex');
-    return encrypted;
-};
-
-export const decrypt = (text: string) : string => {
-    let decrypted = decipher.update(text, 'hex', 'utf8');
-    decrypted += decipher.final('utf8');
-    return decrypted;
-};
+/**
+ * Encrypts an AES key using RSA public key encryption.
+ * @param aesKey - The AES key to be encrypted.
+ * @param rsaPublicKey - The RSA public key used for encryption.
+ * @returns The encrypted AES key.
+ */
+const encryptAESKey = (aesKey: Buffer, rsaPublicKey: string): string => {
+    const publicKeyForge = forge.pki.publicKeyFromPem(rsaPublicKey);
+    const encryptedKey = publicKeyForge.encrypt(aesKey.toString('binary'), 'RSA-OAEP');
+    return forge.util.encode64(encryptedKey);
+}

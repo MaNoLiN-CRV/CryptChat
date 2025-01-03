@@ -5,26 +5,46 @@ import { messageHandler } from "../messages/messageHandler";
 import { webSocketServer } from "../server/server";
 import { WebSocket } from "ws";
 
-let currentConnections = 0;
 
-webSocketServer.on('connection', (ws) => {
-    if (validateConnection(ws)) {
-        messageHandler(ws); // Initialize the message handler
-        ws.emit('initialMessages', getInitialMessages()); // Send the initial messages to the client
-    }
+export const wsGroups = new Map<string, WebSocket[]>();
 
+
+interface joinData {
+    jwt: string;
+    group: string;
+    username: string;
+}
+
+webSocketServer.on('connection', (ws: WebSocket) => {
+    ws.on('join' , ({ jwt, group , username}: joinData) => {
+        if(!validateConnection(ws , jwt)) return;
+        
+    
+
+
+    })
     ws.on('close', () => {
-        currentConnections--;
-        ws.terminate();
+        
+        ws.close();
     })
 });
 
-const validateConnection = (ws: WebSocket): boolean => {
-    // TODO : Validate the jwt
-
-    currentConnections++;
+const validateConnection = (ws: WebSocket, jwt: string): boolean => {
+    if (false) {  // TODO : Validate the jwt 
+        ws.terminate();
+    }
     return true;
 }
+
+const validateJoinGroup = (ws:WebSocket, { group , jwt , username}: joinData): boolean => {
+    // If the jwt username payload is the same as the client username and the jwt is valid and the user belongs to the group (database)
+
+
+    return true;
+}
+
+
+
 /**
  * @returns The initial messages to send to the client
  */
