@@ -24,14 +24,19 @@ export const customTextFieldStyle = StyleSheet.create({
     container: {
         borderRadius: 10,
         backgroundColor: 'rgba(255, 255, 255, 0.1)',
-        padding: 10,
         marginVertical: 10,
+        width: Dimensions.get('window').width * 0.5,
+        
     },
     input: {
         fontSize: 16,
-        color: '#fff',
+        color: 'red',
+        width: '100%',
+      
     },
-});export const customModalStyle = StyleSheet.create({
+});
+
+export const customModalStyle = StyleSheet.create({
   blurContainer: {
     flex: 1,
     backgroundColor: 'rgba(0, 0, 0, 0.4)',
